@@ -2,15 +2,11 @@ const express = require("express");
 const app = express();
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const cheerio = require("cheerio");
-const colors = require("colors");
-
 const connection = mongoose.connection;
+const colors = require("colors");
+const PORT = process.env.PORT || 4000;
 
-const MONGODB_URI =
-    process.env.MONGODB_URI || "mongodb://localhost/web-scrape-mongodb";
-let db = mongoose.connection;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/web-scrape-mongodb";
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -18,18 +14,23 @@ mongoose.connect(MONGODB_URI, {
     useFindAndModify: false
 });
 
+connection.on('error', () => console.log('connection error'));
 
-
-const PORT = process.env.PORT || 4000;
+connection.once('open', () => {
+    console.log('Connected to database');
+    console.log('-----------------------\n'.green);
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("/public"));
 app.use(logger("dev"));
 
-const apiRoutes = require('./routes/api-routes');
-app.use("/", apiRoutes);
+const apiRoutes = require("./routes/api-routes");
+app.use("/all", apiRoutes);
 
+const htmlRoutes = require("./routes/html-routes");
+app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
     console.log("==================\n".rainbow);
