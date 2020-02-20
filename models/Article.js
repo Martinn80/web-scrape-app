@@ -5,7 +5,7 @@ let Schema = mongoose.Schema;
 let ArticleSchema = new Schema({
 
     title: {
-        type: String,
+        type: String
     },
 
     summary: {
@@ -13,7 +13,7 @@ let ArticleSchema = new Schema({
     },
 
     url: {
-        type: mongoose.SchemaTypes.Url
+        type: String
     },
 
     comments: [{
