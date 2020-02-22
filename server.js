@@ -4,7 +4,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const connection = mongoose.connection;
 const colors = require("colors");
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8000;
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/web-scrape-mongodb";
 
@@ -18,21 +18,21 @@ connection.on('error', () => console.log('connection error'));
 
 connection.once('open', () => {
     console.log('Connected to database');
-    console.log('-----------------------\n'.green);
+    console.log('-------------------------------------------------------\n'.green);
 });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("/public"));
+app.use(express.static("./public"));
 app.use(logger("dev"));
 
-const apiRoutes = require("./routes/api-routes");
+const apiRoutes = require("./controller/api-routes");
 app.use("/all", apiRoutes);
 
-const htmlRoutes = require("./routes/html-routes");
+const htmlRoutes = require("./controller/html-routes");
 app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
-    console.log("==================\n".rainbow);
-    console.log(`App listening at http://localhost:${PORT}`.cyan);
+    console.log("========================================================\n".rainbow);
+    console.log(`Listening on local: http://localhost:${PORT}`.cyan);
 });

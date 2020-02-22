@@ -13,7 +13,7 @@ let NoteSchema = new Schema({
         default: Date.now()
     },
     comments: [{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Article"
     }]
 });
