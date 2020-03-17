@@ -26,35 +26,37 @@ router.get("/findByTitle", (req, res) => {
     });
 });
 
+router.get("/scrape", (req, res) => {
+    axios.get("https://arstechnica.com/gaming/").then(urlResponse => {
+        let $ = cheerio.load(urlResponse.data);
+        let Object = [];
 
-axios.get("https://arstechnica.com/gaming/").then(urlResponse => {
-    let $ = cheerio.load(urlResponse.data);
-    let Object = [];
+        $("li.article").each((i, element) => {
+            const title = $(element)
+                .find("a.overlay")
+                .attr("href")
 
-    $("li.article").each((i, element) => {
-        const title = $(element)
-            .find("a.overlay")
-            .attr("href")
+            const summary = $(element)
+                .find("a")
+                .text()
+                .split("    \n")[0];
 
-        const summary = $(element)
-            .find("a")
-            .text()
-            .split("    \n")[0];
+            const url = $(element)
+                .find("a")
+                .attr("href")
+                .split(" , ");
 
-        const url = $(element)
-            .find("a")
-            .attr("href")
-            .split(" , ");
+            console.log(title.blue);
+            console.log("    \n");
+            console.log(summary.green);
+            // console.log(url);
+            console.log("=====================================================\n");
+            console.log(Object);
 
-        console.log(title.blue);
-        console.log("    \n");
-        console.log(summary.green);
-        // console.log(url);
-        console.log("=====================================================\n");
+        });
+        res.send("connection success")
     });
-    // res.send("connection success")
-});
-
+})
 
 
 

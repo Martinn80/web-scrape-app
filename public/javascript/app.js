@@ -3,6 +3,8 @@ $(document).ready(function () {
 
     function start() {
         getNews(result => {
+            console.log(result);
+
             getAllNews(articles => {
                 for (let i = 0; i < articles.length; i++) {
                     $('.articles').prepend(`
@@ -21,9 +23,11 @@ $(document).ready(function () {
     function getNews(cb) {
         $.ajax({
             method: 'GET',
-            url: '/Article/scrape'
+            url: '/all/scrape'
         }).then(result => {
             console.log('Got latest news');
+            console.log();
+
             cb(result);
         });
     }
@@ -31,7 +35,7 @@ $(document).ready(function () {
     function getAllNews(cb) {
         $.ajax({
             method: 'GET',
-            url: '/Article'
+            url: '/all'
         }).then(result => {
             cb(result);
         });
