@@ -10,10 +10,10 @@ $(document).ready(function () {
                     $('.articles').prepend(`
                 <div class="card p-2 mt-2">
                     <div class="card-body">
-                        <h5 class="card-title">${articles[i].title}</h5>
-                        <p class="card-text">${articles[i].summary}</p>
+                        <h5 class="card-text">${articles[i].summary}</h5>
                         <a href="${articles[i].url}" class="card-link"><i class="fa fa-car"></i>Website</a>
                         <button class="btn commentBtn" id = "${articles[i]._id}"><i class="fa fa-comments"></i>Comment</button>
+                        <h5 class="card-title">${articles[i].title}</h5>
                     </div>
                 </div>`);
                 }
