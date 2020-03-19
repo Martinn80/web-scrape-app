@@ -6,9 +6,9 @@ const connection = mongoose.connection;
 const colors = require("colors");
 const PORT = process.env.PORT || 8000;
 
-// const MONGODB_URI = "mongodb://localhost/web-scrape-mongodb";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/web-scrape-mongodb";
 
-const MONGODB_URI = 'mongodb+srv://admin:admin123@cluster0-qpbsx.mongodb.net/tech?retryWrites=true&w=majority'
+// const MONGODB_URI = 'mongodb+srv://admin:admin123@cluster0-qpbsx.mongodb.net/tech?retryWrites=true&w=majority'
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,

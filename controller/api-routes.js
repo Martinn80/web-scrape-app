@@ -28,8 +28,10 @@ router.get("/findByTitle", (req, res) => {
 
 router.get("/scrape", (req, res) => {
     axios.get("https://arstechnica.com/gaming/").then(urlResponse => {
+        //console.log(urlResponse.data)
         let $ = cheerio.load(urlResponse.data);
-        let Object = [];
+        let objectArray = [];
+        
 
         $("li.article").each((i, element) => {
             const title = $(element)
@@ -44,17 +46,28 @@ router.get("/scrape", (req, res) => {
             const url = $(element)
                 .find("a")
                 .attr("href")
-                .split(" , ");
+                .split(" , ")[0];
 
-            console.log(title.blue);
-            console.log("    \n");
-            console.log(summary.green);
-            // console.log(url);
-            console.log("=====================================================\n");
-            console.log(Object);
+            //console.log(title.blue);
+            //console.log("    \n");
+            // console.log(summary.green);
+            //console.log(url);
+            //console.log("=====================================================\n");
+            let obj = {
+                title: summary,
+                summary: summary,
+                url: url
+            }
+            
+            // append / push obj to objectArray
+            objectArray.push(obj)
+            //console.log(objectArray);
 
         });
-        res.send("connection success")
+        //res.send("connection success")
+        res.json({
+            data: objectArray
+        })
     });
 })
 
